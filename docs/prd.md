@@ -28,3 +28,7 @@ A aplicação tem como objetivo permitir que usuários gerenciem suas tarefas di
 - Como usuário, quero filtrar tarefas (todas, concluídas, pendentes) para melhorar minha organização.
 - Como usuário, quero que minhas tarefas sejam salvas no navegador para não perder os dados ao atualizar a página.
 - Como usuário, quero acessar o sistema pelo celular para gerenciar tarefas em qualquer lugar.
+- Como usuário, quero editar uma tarefa para corrigir informações.
+- Como usuário, quero visualizar quantas tarefas ainda faltam.
+- Como usuário, quero limpar todas as tarefas concluídas.
+- Como usuário, quero que o sistema seja responsivo para usar no celular.
