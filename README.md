@@ -1,2 +1,18 @@
-# lista-de-tarefas
-É uma aplicação de gerenciamento de tarefas com persistência local, onde o usuário pode organizar suas atividades de forma simples e responsiva.
+# Lista de Tarefas
+
+## Descrição
+Aplicação web para gerenciamento de tarefas com armazenamento local.
+
+## Objetivo
+Auxiliar usuários na organização de atividades diárias.
+
+## Funcionalidades
+- Adicionar tarefas
+- Remover tarefas
+- Marcar como concluída
+- Filtrar tarefas
+
+## Tecnologias
+- HTML
+- CSS
+- JavaScript
