@@ -43,3 +43,14 @@ Essa API agrega valor ao sistema ao fornecer dados dinâmicos e atualizados, tor
 
 ## Prototipação de telas
 - link do Stitc: https://stitch.withgoogle.com/projects/17345849321701683747
+
+## Atividade - Ambiente de Desenvolvimento Web
+
+- Instalação do Node.js e NPM
+- Inicialização do projeto com npm init
+- Instalação de dependências (jquery, uuid)
+- Instalação de dependência de desenvolvimento (gh-pages)
+- Criação do arquivo .gitignore
+- Inicialização do Git
+- Primeiro commit realizado
+- Sincronização com o GitHub (git push)
