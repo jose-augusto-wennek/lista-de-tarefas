@@ -1,0 +1,94 @@
+// ══════════════════════════════════════
+// _mixins.scss
+// Mixins reutilizáveis do FocusFlow
+// ══════════════════════════════════════
+
+@use 'variables' as *;
+
+// Aplica regra apenas no dark mode (economiza repetição de "body.dark-mode")
+@mixin dark-mode {
+  body.dark-mode & {
+    @content;
+  }
+}
+
+// Flexbox helper: linha com alinhamento central e gap configurável
+@mixin flex-center($gap: 0) {
+  display: flex;
+  align-items: center;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+// Flexbox helper: coluna
+@mixin flex-column($gap: 0) {
+  display: flex;
+  flex-direction: column;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+// Texto truncado em badges/labels (uppercase + letter-spacing)
+@mixin label-text($size: $fs-xs) {
+  font-size: $size;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+// Card base reutilizado em vários componentes
+@mixin card-base {
+  background-color: $color-bg-light;
+  border: 1px solid $color-border-light;
+  border-radius: $radius-md;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  @include dark-mode {
+    background-color: $color-sidebar-bg-dark;
+    border-color: rgba($color-border-dark, 0.5);
+  }
+}
+
+// Badge de prioridade/status, recebe cor base e cor dark
+@mixin badge-variant($bg, $color, $bg-dark, $color-dark) {
+  background-color: rgba($bg, 0.1);
+  color: $color;
+  @include label-text;
+  padding: 2px 8px;
+  border-radius: $radius-sm;
+
+  @include dark-mode {
+    background-color: rgba($bg-dark, 0.15);
+    color: $color-dark;
+  }
+}
+
+// Botão "ghost" com hover sutil — usado em ícones e ações
+@mixin btn-ghost($hover-bg: rgba(225, 226, 238, 0.5)) {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition:
+    background $transition-fast,
+    color $transition-fast;
+
+  &:hover {
+    background-color: $hover-bg;
+  }
+}
+
+// Media query mobile-first (min-width)
+@mixin from($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Media query desktop-first (max-width) — usado para casos pontuais de sidebar
+@mixin until($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}

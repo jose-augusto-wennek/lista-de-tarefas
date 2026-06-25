@@ -1,0 +1,648 @@
+// ══════════════════════════════════════
+// tasks.scss — FocusFlow Tasks Page
+// Compilado para public/css/tasks.css
+// Importar DEPOIS de style.css no HTML
+// ══════════════════════════════════════
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Page Header ──
+.page-title {
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $color-text-light;
+  line-height: 1.2;
+  @include dark-mode {
+    color: $color-text-dark;
+  }
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: $color-muted-light;
+  @include dark-mode {
+    color: rgba($color-text-dark, 0.6);
+  }
+}
+
+// ── Stat mini cards ──
+.mini-stat {
+  @include card-base;
+  padding: 1rem 1.25rem;
+  @include flex-center(0.75rem);
+}
+.mini-stat-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: $radius-md;
+  @include flex-center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  &.blue {
+    @include badge-variant(
+      $color-primary,
+      $color-primary,
+      $color-primary-dark,
+      $color-primary-dark
+    );
+    border-radius: $radius-md;
+  }
+  &.orange {
+    @include badge-variant(
+      $color-tertiary,
+      $color-tertiary,
+      $color-tertiary-dark,
+      $color-tertiary-dark
+    );
+    border-radius: $radius-md;
+  }
+  &.red {
+    @include badge-variant($color-danger, $color-danger, $color-danger-dark, $color-danger-dark);
+    border-radius: $radius-md;
+  }
+  &.green {
+    @include badge-variant(
+      $color-success,
+      $color-success,
+      $color-success-dark,
+      $color-success-dark
+    );
+    border-radius: $radius-md;
+  }
+}
+.mini-stat-value {
+  font-size: clamp(1.5rem, 1.3rem + 0.8vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1;
+  color: $color-text-light;
+  @include dark-mode {
+    color: $color-text-dark;
+  }
+}
+.mini-stat-label {
+  @include label-text($fs-xs);
+  color: $color-faint-light;
+  @include dark-mode {
+    color: rgba($color-text-dark, 0.5);
+  }
+}
+
+// ── Toolbar ──
+.tasks-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.btn-primary-brand {
+  background-color: $color-primary;
+  color: #fff;
+  border: none;
+  border-radius: $radius-md;
+  padding: 0.5rem 1rem;
+  font-size: $fs-sm;
+  font-weight: 600;
+  @include flex-center(0.4rem);
+  cursor: pointer;
+  transition: filter $transition-fast;
+  white-space: nowrap;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.btn-outline-custom {
+  background: transparent;
+  border: 1px solid $color-border-light;
+  border-radius: $radius-md;
+  padding: 0.5rem 1rem;
+  font-size: $fs-sm;
+  font-weight: 500;
+  color: $color-muted-light;
+  @include flex-center(0.4rem);
+  cursor: pointer;
+  transition:
+    background $transition-fast,
+    border-color $transition-fast;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: rgba(225, 226, 238, 0.4);
+    border-color: $color-faint-light;
+  }
+
+  @include dark-mode {
+    border-color: $color-border-dark;
+    color: $color-text-dark;
+    &:hover {
+      background-color: rgba(225, 226, 238, 0.08);
+    }
+  }
+}
+
+.search-bar-tasks {
+  background-color: $color-sidebar-bg;
+  border: 1px solid $color-border-light;
+  border-radius: $radius-pill;
+  padding: 0.4rem 1rem;
+  @include flex-center(0.5rem);
+  flex: 1;
+  min-width: 11.25rem;
+  max-width: 21.25rem;
+
+  @include dark-mode {
+    background-color: rgba(225, 226, 238, 0.08);
+    border-color: $color-border-dark;
+  }
+
+  input {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: $fs-base;
+    color: $color-text-light;
+    width: 100%;
+    @include dark-mode {
+      color: $color-text-dark;
+    }
+    &::placeholder {
+      color: $color-faint-light;
+    }
+  }
+}
+
+.select-custom {
+  background-color: $color-sidebar-bg;
+  border: 1px solid $color-border-light;
+  border-radius: $radius-md;
+  padding: 0.4rem 0.75rem;
+  font-size: $fs-sm;
+  color: $color-muted-light;
+  cursor: pointer;
+  outline: none;
+  transition: border-color $transition-fast;
+
+  &:focus {
+    border-color: $color-primary;
+  }
+
+  @include dark-mode {
+    background-color: rgba(225, 226, 238, 0.08);
+    border-color: $color-border-dark;
+    color: $color-text-dark;
+  }
+}
+
+// ── Task Items ──
+.task-item {
+  padding: 1rem;
+  border-bottom: 1px solid $color-border-light;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background-color: $color-bg-light;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    opacity $transition-base;
+
+  @include dark-mode {
+    background-color: $color-sidebar-bg-dark;
+    border-bottom-color: rgba($color-border-dark, 0.5);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    @include dark-mode {
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &.completed {
+    opacity: 0.55;
+    .task-item-title {
+      text-decoration: line-through;
+      color: $color-faint-light;
+    }
+  }
+}
+
+// Checkbox
+.task-cb {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: $radius-sm;
+  border: 2px solid $color-faint-light;
+  background: transparent;
+  cursor: pointer;
+  @include flex-center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition:
+    border-color $transition-fast,
+    background $transition-fast;
+
+  &:hover {
+    border-color: $color-primary;
+  }
+  &.checked {
+    border-color: $color-primary;
+    background: rgba(0, 87, 205, 0.12);
+  }
+}
+
+// Text
+.task-item-title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: $color-text-light;
+  margin-bottom: 2px;
+  line-height: 1.4;
+  @include dark-mode {
+    color: $color-text-dark;
+  }
+}
+
+.task-item-desc {
+  font-size: $fs-sm;
+  color: $color-muted-light;
+  margin-bottom: 6px;
+  line-height: 1.5;
+  @include dark-mode {
+    color: rgba($color-text-dark, 0.6);
+  }
+}
+
+.task-item-meta {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  color: $color-faint-light;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  @include dark-mode {
+    color: rgba($color-text-dark, 0.45);
+  }
+}
+
+.task-item-actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity $transition-fast;
+  flex-shrink: 0;
+}
+.task-item:hover .task-item-actions {
+  opacity: 1;
+}
+
+.btn-item-action {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: $color-faint-light;
+  padding: 4px;
+  border-radius: 4px;
+  transition:
+    color $transition-fast,
+    background $transition-fast;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background: rgba(225, 226, 238, 0.5);
+  }
+  &.edit:hover {
+    color: $color-primary;
+  }
+  &.delete:hover {
+    color: $color-danger;
+  }
+
+  @include dark-mode {
+    color: rgba($color-text-dark, 0.5);
+    &:hover {
+      background: rgba(225, 226, 238, 0.08);
+    }
+  }
+}
+
+// Priority badges
+.badge-low {
+  @include badge-variant($color-success, $color-success, $color-success-dark, $color-success-dark);
+}
+
+// ── Empty state ──
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: $color-faint-light;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  &.visible {
+    display: flex;
+  }
+  .material-symbols-outlined {
+    font-size: 3rem;
+    opacity: 0.4;
+  }
+  p {
+    font-size: $fs-base;
+    margin: 0;
+  }
+}
+
+// ── History Panel ──
+.history-panel {
+  @include card-base;
+}
+.history-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid $color-border-light;
+  font-size: $fs-sm;
+
+  @include dark-mode {
+    border-bottom-color: rgba($color-border-dark, 0.4);
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.history-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+
+  &.added {
+    background-color: $color-primary;
+  }
+  &.completed {
+    background-color: $color-success;
+  }
+  &.deleted {
+    background-color: $color-danger;
+  }
+  &.edited {
+    background-color: $color-tertiary;
+  }
+  &.restored {
+    background-color: $color-secondary;
+  }
+}
+.history-action {
+  color: $color-text-light;
+  font-weight: 500;
+  line-height: 1.4;
+  @include dark-mode {
+    color: $color-text-dark;
+  }
+}
+.history-time {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  color: $color-faint-light;
+  white-space: nowrap;
+  margin-top: 2px;
+  @include dark-mode {
+    color: rgba($color-text-dark, 0.45);
+  }
+}
+.history-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: $color-faint-light;
+  font-size: $fs-sm;
+}
+
+// ── Modal ──
+.modal-custom .modal-content {
+  @include card-base;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+.modal-custom .modal-header {
+  border-bottom: 1px solid $color-border-light;
+  padding: 1rem 1.25rem;
+  @include dark-mode {
+    border-bottom-color: rgba($color-border-dark, 0.5);
+  }
+}
+.modal-custom .modal-footer {
+  border-top: 1px solid $color-border-light;
+  padding: 0.75rem 1.25rem;
+  @include dark-mode {
+    border-top-color: rgba($color-border-dark, 0.5);
+  }
+}
+.modal-custom .modal-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $color-text-light;
+  @include dark-mode {
+    color: $color-text-dark;
+  }
+}
+
+.form-label-custom {
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: $color-muted-light;
+  margin-bottom: 4px;
+  display: block;
+  @include dark-mode {
+    color: rgba($color-text-dark, 0.7);
+  }
+}
+
+.form-control-custom {
+  width: 100%;
+  background-color: $color-sidebar-bg;
+  border: 1px solid $color-border-light;
+  border-radius: $radius-md;
+  padding: 0.5rem 0.75rem;
+  font-size: $fs-base;
+  color: $color-text-light;
+  outline: none;
+  transition: border-color $transition-fast;
+  font-family: $font-base;
+
+  &:focus {
+    border-color: $color-primary;
+  }
+
+  @include dark-mode {
+    background-color: rgba(225, 226, 238, 0.06);
+    border-color: $color-border-dark;
+    color: $color-text-dark;
+    &:focus {
+      border-color: $color-primary-dark;
+    }
+  }
+}
+
+.priority-selector {
+  display: flex;
+  gap: 0.5rem;
+}
+.priority-option {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: $radius-md;
+  border: 2px solid $color-border-light;
+  background: transparent;
+  font-size: $fs-xs;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color $transition-fast,
+    background $transition-fast,
+    color $transition-fast;
+  color: $color-faint-light;
+
+  &[data-priority='high'].selected {
+    border-color: $color-danger;
+    background: rgba(186, 26, 26, 0.08);
+    color: $color-danger;
+  }
+  &[data-priority='medium'].selected {
+    border-color: $color-tertiary;
+    background: rgba(166, 59, 0, 0.08);
+    color: $color-tertiary;
+  }
+  &[data-priority='low'].selected {
+    border-color: $color-success;
+    background: rgba(30, 120, 60, 0.08);
+    color: $color-success;
+  }
+
+  @include dark-mode {
+    border-color: $color-border-dark;
+    color: rgba($color-text-dark, 0.5);
+
+    &[data-priority='high'].selected {
+      border-color: $color-danger-dark;
+      background: rgba(255, 218, 214, 0.1);
+      color: $color-danger-dark;
+    }
+    &[data-priority='medium'].selected {
+      border-color: $color-tertiary-dark;
+      background: rgba(255, 181, 153, 0.1);
+      color: $color-tertiary-dark;
+    }
+    &[data-priority='low'].selected {
+      border-color: $color-success-dark;
+      background: rgba(130, 219, 160, 0.1);
+      color: $color-success-dark;
+    }
+  }
+}
+
+.btn-save {
+  background-color: $color-primary;
+  color: #fff;
+  border: none;
+  border-radius: $radius-md;
+  padding: 0.5rem 1.25rem;
+  font-size: $fs-sm;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter $transition-fast;
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.btn-cancel {
+  background: transparent;
+  color: $color-muted-light;
+  border: 1px solid $color-border-light;
+  border-radius: $radius-md;
+  padding: 0.5rem 1.25rem;
+  font-size: $fs-sm;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background $transition-fast;
+  &:hover {
+    background: rgba(225, 226, 238, 0.4);
+  }
+
+  @include dark-mode {
+    border-color: $color-border-dark;
+    color: $color-text-dark;
+  }
+}
+
+.btn-close-custom {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: $color-faint-light;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  transition: background $transition-fast;
+  &:hover {
+    background: rgba(225, 226, 238, 0.4);
+  }
+
+  @include dark-mode {
+    color: rgba($color-text-dark, 0.5);
+  }
+}
+
+// ── Toast ──
+#tasks-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: $color-sidebar-bg-dark;
+  color: #eff0fc;
+  padding: 0.75rem 1rem;
+  border-radius: $radius-md;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 3000;
+  transform: translateY(80px);
+  opacity: 0;
+  transition:
+    transform $transition-base,
+    opacity $transition-base;
+  font-size: $fs-base;
+  min-width: 13.75rem;
+
+  @include dark-mode {
+    background-color: $color-bg-light;
+    color: $color-text-light;
+  }
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .toast-icon {
+    font-size: 1.25rem;
+  }
+}

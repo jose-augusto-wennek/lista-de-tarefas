@@ -1,0 +1,604 @@
+// ══════════════════════════════════════
+// style.scss — FocusFlow Shared Styles
+// Compilado para public/css/style.css
+// ══════════════════════════════════════
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Base ──
+body {
+  font-family: $font-base;
+  background-color: $color-bg-light;
+  color: $color-text-light;
+  min-height: 100vh;
+  // Tipografia fluida: nunca menor que 14px, nunca maior que 16px,
+  // escala com 1vw entre esses limites (ID 08)
+  font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
+
+  &.dark-mode {
+    background-color: $color-bg-dark;
+    color: $color-text-dark;
+  }
+}
+
+// ── Material Icons ──
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  vertical-align: middle;
+}
+
+// ── Sidebar ──
+#sidebar {
+  width: $sidebar-width;
+  background-color: $color-sidebar-bg;
+  border-right: 1px solid $color-border-light;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 1040;
+  @include flex-column(0.5rem);
+  padding: 1rem;
+  transition: transform $transition-base;
+
+  @include dark-mode {
+    background-color: $color-sidebar-bg-dark;
+    border-right-color: $color-border-dark;
+  }
+
+  @include until($bp-md - 1) {
+    transform: translateX(-100%);
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.sidebar-brand {
+  h1 {
+    // clamp(min, preferred, max): título cresce com a tela sem quebrar no mobile
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.6rem);
+    font-weight: 700;
+    color: $color-primary;
+    @include dark-mode {
+      color: $color-primary-dark;
+    }
+  }
+  p {
+    font-size: $fs-sm;
+    color: $color-muted-light;
+    @include dark-mode {
+      color: $color-text-dark;
+    }
+  }
+}
+
+.btn-new-task {
+  background-color: $color-primary;
+  color: #fff;
+  border: none;
+  border-radius: $radius-md;
+  padding: 0.5rem 1rem;
+  font-size: $fs-sm;
+  font-weight: 600;
+  @include flex-center(0.4rem);
+  transition: filter $transition-fast;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.nav-link-custom {
+  @include flex-center(1rem);
+  padding: 0.5rem 1rem;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 500;
+  color: $color-muted-light;
+  text-decoration: none;
+  transition:
+    background $transition-fast,
+    color $transition-fast;
+
+  &:hover {
+    background-color: rgba(225, 226, 238, 0.5);
+    color: $color-text-light;
+  }
+  &.active {
+    background-color: rgba(216, 225, 234, 0.4);
+    color: $color-primary;
+    font-weight: 700;
+  }
+
+  @include dark-mode {
+    color: $color-text-dark;
+    &.active {
+      color: $color-primary-dark;
+    }
+  }
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  border-top: 1px solid $color-border-light;
+  padding-top: 1rem;
+  @include flex-column(0.25rem);
+
+  @include dark-mode {
+    border-top-color: $color-border-dark;
+  }
+}
+
+// ── Main Layout ──
+#main-content {
+  margin-left: $sidebar-width;
+  @include flex-column;
+  min-height: 100vh;
+
+  @include until($bp-md - 1) {
+    margin-left: 0;
+  }
+}
+
+// ── Top Navbar ──
+#topbar {
+  background-color: $color-bg-light;
+  border-bottom: 1px solid $color-border-light;
+  padding: 0.5rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include dark-mode {
+    background-color: $color-sidebar-bg-dark;
+    border-bottom-color: $color-border-dark;
+  }
+}
+
+.search-bar {
+  background-color: $color-sidebar-bg;
+  border: 1px solid $color-border-light;
+  border-radius: $radius-pill;
+  padding: 0.4rem 1rem;
+  @include flex-center(0.5rem);
+  width: 24rem;
+
+  @include dark-mode {
+    background-color: rgba(225, 226, 238, 0.08);
+    border-color: $color-border-dark;
+  }
+
+  input {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: $color-text-light;
+    width: 100%;
+
+    @include dark-mode {
+      color: $color-text-dark;
+    }
+    &::placeholder {
+      color: $color-faint-light;
+    }
+  }
+}
+
+.btn-icon {
+  @include btn-ghost;
+  border-radius: 50%;
+  padding: 0.4rem;
+  color: $color-muted-light;
+
+  @include dark-mode {
+    color: $color-text-dark;
+  }
+}
+
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid $color-border-light;
+  overflow: hidden;
+  object-fit: cover; // ID 09 - imagem se adapta ao container circular
+}
+
+// ── Cards ──
+.card-custom {
+  @include card-base;
+}
+
+// ── Stat Cards ──
+.stat-card {
+  @include flex-column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+}
+.stat-number {
+  // Números grandes fluidos: nunca menores que 32px, no máximo 48px
+  font-size: clamp(2rem, 1.6rem + 1.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  @include label-text($fs-sm);
+  color: $color-muted-light;
+  @include dark-mode {
+    color: $color-text-dark;
+  }
+}
+
+.text-primary-brand {
+  color: $color-primary;
+  @include dark-mode {
+    color: $color-primary-dark;
+  }
+}
+.text-tertiary-brand {
+  color: $color-tertiary;
+  @include dark-mode {
+    color: $color-tertiary-dark;
+  }
+}
+.text-secondary-brand {
+  color: $color-secondary;
+  @include dark-mode {
+    color: $color-secondary-dark;
+  }
+}
+
+// ── Alert ──
+.smart-alert {
+  background-color: rgba(216, 225, 234, 0.5);
+  border: 1px solid #d8e1ea;
+  border-radius: $radius-md;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  @include dark-mode {
+    background-color: rgba(191, 200, 208, 0.08);
+    border-color: rgba(194, 198, 216, 0.3);
+  }
+}
+.alert-icon {
+  background-color: rgba(0, 87, 205, 0.1);
+  border-radius: 50%;
+  padding: 0.4rem;
+  color: $color-primary;
+  flex-shrink: 0;
+  @include dark-mode {
+    color: $color-primary-dark;
+  }
+}
+
+// ── Task List (dashboard preview) ──
+.section-header {
+  padding: 1rem;
+  border-bottom: 1px solid $color-border-light;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include dark-mode {
+    border-bottom-color: rgba($color-border-dark, 0.5);
+  }
+}
+
+.filter-group {
+  background-color: rgba(225, 226, 238, 0.5);
+  border-radius: $radius-pill;
+  padding: 2px;
+  display: flex;
+}
+.filter-btn {
+  padding: 2px 12px;
+  border-radius: $radius-pill;
+  border: none;
+  background: transparent;
+  font-size: $fs-sm;
+  color: $color-muted-light;
+  cursor: pointer;
+
+  &.active {
+    background-color: $color-bg-light;
+    color: $color-text-light;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    @include dark-mode {
+      background-color: $color-sidebar-bg-dark;
+      color: $color-text-dark;
+    }
+  }
+}
+
+.task-card {
+  padding: 1rem;
+  border-bottom: 1px solid $color-border-light;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background-color: $color-bg-light;
+  transition:
+    transform $transition-fast,
+    box-shadow $transition-fast;
+
+  @include dark-mode {
+    background-color: $color-sidebar-bg-dark;
+    border-bottom-color: rgba($color-border-dark, 0.5);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    @include dark-mode {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+.task-checkbox {
+  margin-top: 4px;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: $radius-sm;
+  border: 2px solid $color-faint-light;
+  background: transparent;
+  cursor: pointer;
+  @include flex-center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color $transition-fast;
+
+  &:hover {
+    border-color: $color-primary;
+  }
+  &.checked {
+    border-color: $color-primary;
+    background: rgba(0, 87, 205, 0.1);
+  }
+}
+
+.badge-high {
+  @include badge-variant($color-danger, $color-danger, $color-danger-dark, $color-danger-dark);
+}
+.badge-medium {
+  @include badge-variant($color-warning, $color-warning, $color-warning-dark, $color-warning-dark);
+}
+
+.task-meta {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  color: $color-faint-light;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  @include dark-mode {
+    color: rgba($color-text-dark, 0.5);
+  }
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity $transition-fast;
+}
+.task-card:hover .task-actions {
+  opacity: 1;
+}
+
+.btn-task-action {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: $color-faint-light;
+  padding: 0;
+  transition: color $transition-fast;
+
+  &.edit:hover {
+    color: $color-primary;
+  }
+  &.delete:hover {
+    color: $color-danger;
+  }
+}
+
+.view-all-btn {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(225, 226, 238, 0.2);
+  border-radius: 0 0 $radius-md $radius-md;
+
+  button {
+    background: transparent;
+    border: none;
+    color: $color-primary;
+    font-size: $fs-sm;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+    @include dark-mode {
+      color: $color-primary-dark;
+    }
+  }
+}
+
+// ── Weather Widget ──
+.weather-header {
+  padding: 1rem;
+  background: linear-gradient(135deg, #0d6efd, #0057ce);
+  color: #fff;
+  border-radius: $radius-md $radius-md 0 0;
+
+  .temp {
+    font-size: clamp(2rem, 1.7rem + 1vw, 3rem);
+    font-weight: 700;
+  }
+}
+.weather-forecast {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  overflow-x: auto;
+  background-color: $color-sidebar-bg;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include dark-mode {
+    background-color: rgba(225, 226, 238, 0.05);
+  }
+}
+.forecast-day {
+  min-width: 3.75rem;
+  @include flex-column;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: $radius-md;
+  background-color: $color-bg-light;
+  border: 1px solid rgba(194, 198, 216, 0.3);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  @include dark-mode {
+    background-color: $color-sidebar-bg-dark;
+  }
+
+  .day-label {
+    font-size: $fs-sm;
+    color: $color-muted-light;
+    @include dark-mode {
+      color: $color-text-dark;
+    }
+  }
+  .day-temp {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 4px;
+    @include dark-mode {
+      color: $color-text-dark;
+    }
+  }
+}
+.forecast-day-muted .day-label,
+.forecast-day-muted .day-temp {
+  color: $color-faint-light;
+}
+
+// ── Heatmap ──
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.heatmap-cell {
+  height: 1.5rem;
+  border-radius: $radius-sm;
+}
+
+// ── Toast ──
+#toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: $color-sidebar-bg-dark;
+  color: #eff0fc;
+  padding: 0.75rem 1rem;
+  border-radius: $radius-md;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 2000;
+  transform: translateY(80px);
+  opacity: 0;
+  transition:
+    transform $transition-base,
+    opacity $transition-base;
+
+  @include dark-mode {
+    background-color: $color-bg-light;
+    color: $color-text-light;
+  }
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// ── Section Title ──
+.section-title {
+  font-size: clamp(1.125rem, 1rem + 0.4vw, 1.25rem);
+  font-weight: 600;
+  color: $color-text-light;
+  @include dark-mode {
+    color: $color-text-dark;
+  }
+}
+
+// ── Hero Banner (imagem responsiva — ID 09 / ID 10) ──
+.hero-banner {
+  position: relative;
+  width: 100%;
+  // aspect-ratio + unidade relativa: container sempre proporcional, sem altura fixa em px
+  aspect-ratio: 16 / 5;
+  min-height: 8rem;
+  border-radius: $radius-md;
+  overflow: hidden;
+}
+.hero-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; // imagem preenche o container sem distorcer, recortando sobra
+  object-position: center;
+  display: block;
+}
+.hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 30, 80, 0.75), rgba(0, 30, 80, 0.35));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1rem, 2vw, 2rem);
+  color: #fff;
+}
+.hero-banner-title {
+  // Tipografia fluida: cresce em telas maiores sem media query (ID 08)
+  font-size: clamp(1.25rem, 1rem + 2vw, 2rem);
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.hero-banner-sub {
+  font-size: clamp(0.8125rem, 0.7rem + 0.5vw, 1rem);
+  opacity: 0.9;
+  margin: 0;
+}
+
+// ── Utility ──
+.text-muted-custom {
+  color: $color-muted-light;
+  @include dark-mode {
+    color: rgba($color-text-dark, 0.8);
+  }
+}

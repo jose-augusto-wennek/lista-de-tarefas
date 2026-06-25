@@ -1,0 +1,32 @@
+{
+  "name": "focusflow",
+  "version": "1.0.0",
+  "description": "FocusFlow - Productivity Dashboard com Bootstrap 5 e Sass",
+  "main": "index.html",
+  "scripts": {
+    "sass:build": "sass src/scss/style.scss public/css/style.css --no-source-map && sass src/scss/calendar.scss public/css/calendar.css --no-source-map && sass src/scss/tasks.scss public/css/tasks.css --no-source-map",
+    "sass:watch": "sass --watch src/scss/style.scss:public/css/style.css src/scss/calendar.scss:public/css/calendar.css src/scss/tasks.scss:public/css/tasks.css",
+    "lint": "eslint src/js/**/*.js",
+    "lint:fix": "eslint src/js/**/*.js --fix",
+    "format": "prettier --write \"src/**/*.{js,scss}\" \"*.html\"",
+    "build": "npm run sass:build && npm run lint && npm run format",
+    "start": "npm run sass:watch"
+  },
+  "keywords": [
+    "bootstrap",
+    "sass",
+    "productivity",
+    "todo",
+    "dashboard"
+  ],
+  "author": "José",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "prettier": "^3.8.4",
+    "sass": "^1.101.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
+}

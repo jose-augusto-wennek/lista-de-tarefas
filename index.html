@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>FocusFlow - Productivity Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link href="public/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Overlay mobile para fechar sidebar ao clicar fora -->
+    <div id="sidebar-overlay"></div>
+
+    <!-- ═══════════════════════════ SIDEBAR ═══════════════════════════ -->
+    <aside id="sidebar">
+      <div class="sidebar-brand mb-3">
+        <h1>FocusFlow Pro</h1>
+        <p>Productivity System</p>
+      </div>
+
+      <button class="btn-new-task mb-3 w-100 justify-content-center">
+        <span class="material-symbols-outlined" style="font-size: 18px">add</span>
+        New Task
+      </button>
+
+      <nav class="d-flex flex-column gap-1">
+        <a class="nav-link-custom active" href="index.html">
+          <span class="material-symbols-outlined">dashboard</span> Dashboard
+        </a>
+        <a class="nav-link-custom" href="tasks.html">
+          <span class="material-symbols-outlined">checklist</span> Tasks
+        </a>
+        <a class="nav-link-custom" href="calendar.html">
+          <span class="material-symbols-outlined">calendar_today</span> Calendar
+        </a>
+        <a class="nav-link-custom" href="#">
+          <span class="material-symbols-outlined">analytics</span> Analytics
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a class="nav-link-custom" href="#">
+          <span class="material-symbols-outlined">settings</span> Settings
+        </a>
+        <a class="nav-link-custom" href="#">
+          <span class="material-symbols-outlined">logout</span> Logout
+        </a>
+      </div>
+    </aside>
+
+    <!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
+    <div id="main-content">
+      <!-- TOP BAR -->
+      <header id="topbar">
+        <!-- Mobile: botão de menu + brand -->
+        <div class="d-flex align-items-center gap-2 d-md-none">
+          <button class="btn-icon" id="mobileMenuBtn">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <span class="fw-bold fs-5 text-primary-brand">FocusFlow</span>
+        </div>
+
+        <!-- Search (desktop) -->
+        <div class="search-bar d-none d-md-flex">
+          <span class="material-symbols-outlined text-muted" style="font-size: 20px">search</span>
+          <input placeholder="Search tasks, projects..." type="text" />
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn-icon" id="themeToggle" title="Toggle dark mode">
+            <span class="material-symbols-outlined">dark_mode</span>
+          </button>
+          <img
+            alt="User profile"
+            class="avatar"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH9x4lUEm0cm-6tvwYkyAHtJmg9f2evUovOFibBc7fZFHMOMh1SwaiqTkELlc0NqKtMPK_ok8tc7yA0FVXc4Auz4FmmhxOLaC_m4AwcdfbQJlNGXl84NxAT5MgScSSXJ3PLUvHpwXLaBOWNTgH14u_EubinwzBHhqV8dAOctik0Gcd4CSX0KRyfIgvMW2hCBOoPKS7_n13UQuNvoH4aanU3mmvRu-dEa30XEBRbxxmkq6VFbdzSTR9SWL_s9gMHBrmcjtvXrmz9v77"
+          />
+        </div>
+      </header>
+
+      <!-- DASHBOARD CONTENT -->
+      <div class="container-fluid p-3 p-md-4 flex-grow-1" style="max-width: 1280px; margin: 0 auto">
+        <!-- Hero Banner: imagem responsiva (ID 09 / ID 10) -->
+        <div class="hero-banner mb-4">
+          <picture>
+            <!-- WebP: formato moderno, menor tamanho de arquivo -->
+            <source
+              type="image/webp"
+              srcset="
+                https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=480&fm=webp&q=70   480w,
+                https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=960&fm=webp&q=75   960w,
+                https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1600&fm=webp&q=80 1600w
+              "
+              sizes="100vw"
+            />
+            <!-- Fallback JPEG para navegadores sem suporte a WebP -->
+            <img
+              src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=960&q=75"
+              srcset="
+                https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=480&q=70   480w,
+                https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=960&q=75   960w,
+                https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1600&q=80 1600w
+              "
+              sizes="100vw"
+              alt="Espaço de trabalho organizado, simbolizando produtividade e foco"
+              class="hero-banner-img"
+              loading="lazy"
+              width="1600"
+              height="400"
+            />
+          </picture>
+          <div class="hero-banner-overlay">
+            <h2 class="hero-banner-title">Bem-vindo de volta!</h2>
+            <p class="hero-banner-sub">Você tem tarefas importantes esperando por você hoje.</p>
+          </div>
+        </div>
+
+        <!-- Smart Assistant Alert -->
+        <div class="smart-alert mb-4">
+          <div class="alert-icon">
+            <span class="material-symbols-outlined" style="font-size: 24px">assistant</span>
+          </div>
+          <div>
+            <h3 class="section-title mb-1" style="font-size: 20px">Morning Briefing</h3>
+            <p class="mb-0 text-muted-custom" style="font-size: 16px; line-height: 1.6">
+              Looks like a clear day ahead. Perfect time to tackle those high-priority design tasks
+              before your 2 PM sync.
+            </p>
+          </div>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="row g-4 mb-5">
+          <!-- ── Left Column ── -->
+          <div class="col-12 col-lg-8 d-flex flex-column gap-4">
+            <!-- Stat Cards -->
+            <div class="row g-3">
+              <div class="col-6 col-md-3">
+                <div class="card-custom stat-card">
+                  <span class="stat-number text-primary-brand">42</span>
+                  <span class="stat-label">Total Tasks</span>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="card-custom stat-card">
+                  <span class="stat-number text-tertiary-brand">28</span>
+                  <span class="stat-label">Completed</span>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="card-custom stat-card">
+                  <span class="stat-number text-secondary-brand">14</span>
+                  <span class="stat-label">Pending</span>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="card-custom stat-card position-relative overflow-hidden">
+                  <span class="stat-number" style="color: #191b24">66%</span>
+                  <span class="stat-label">Efficiency</span>
+                  <!-- Progress bar strip at bottom -->
+                  <div
+                    class="position-absolute bottom-0 start-0 w-100"
+                    style="height: 4px; background: #e1e2ee"
+                  >
+                    <div style="height: 100%; width: 66%; background: #0057cd"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Task List -->
+            <div class="card-custom">
+              <div class="section-header">
+                <h2 class="section-title mb-0">Today's Focus</h2>
+                <div class="filter-group">
+                  <button class="filter-btn active">All</button>
+                  <button class="filter-btn">Pending</button>
+                </div>
+              </div>
+
+              <!-- Task 1 -->
+              <div class="task-card">
+                <button class="task-checkbox" id="check1"></button>
+                <div class="flex-grow-1">
+                  <div class="d-flex justify-content-between align-items-start mb-1">
+                    <h4 class="mb-0" style="font-size: 16px; font-weight: 500">
+                      Finalize Q3 Marketing Assets
+                    </h4>
+                    <span class="badge-high">High</span>
+                  </div>
+                  <p class="mb-2 text-muted-custom" style="font-size: 14px">
+                    Review banners and update Figma files based on client feedback.
+                  </p>
+                  <div class="task-meta">
+                    <span class="d-flex align-items-center gap-1">
+                      <span class="material-symbols-outlined" style="font-size: 14px"
+                        >calendar_today</span
+                      >
+                      Today, 2:00 PM
+                    </span>
+                  </div>
+                </div>
+                <div class="task-actions">
+                  <button class="btn-task-action edit">
+                    <span class="material-symbols-outlined" style="font-size: 20px">edit</span>
+                  </button>
+                  <button class="btn-task-action delete">
+                    <span class="material-symbols-outlined" style="font-size: 20px">delete</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Task 2 -->
+              <div class="task-card" style="border-bottom: none">
+                <button class="task-checkbox" id="check2"></button>
+                <div class="flex-grow-1">
+                  <div class="d-flex justify-content-between align-items-start mb-1">
+                    <h4 class="mb-0" style="font-size: 16px; font-weight: 500">
+                      Team Sync Presentation
+                    </h4>
+                    <span class="badge-medium">Medium</span>
+                  </div>
+                  <div class="task-meta mt-2">
+                    <span class="d-flex align-items-center gap-1">
+                      <span class="material-symbols-outlined" style="font-size: 14px"
+                        >calendar_today</span
+                      >
+                      Tomorrow
+                    </span>
+                  </div>
+                </div>
+                <div class="task-actions">
+                  <button class="btn-task-action edit">
+                    <span class="material-symbols-outlined" style="font-size: 20px">edit</span>
+                  </button>
+                  <button class="btn-task-action delete">
+                    <span class="material-symbols-outlined" style="font-size: 20px">delete</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="view-all-btn">
+                <button>View All Tasks</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Right Column ── -->
+          <div class="col-12 col-lg-4 d-flex flex-column gap-4">
+            <!-- Weather Widget -->
+            <div class="card-custom overflow-hidden">
+              <div class="weather-header">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 2px">
+                      San Francisco
+                    </h3>
+                    <p style="font-size: 13px; opacity: 0.8; margin: 0">Partly Cloudy</p>
+                  </div>
+                  <span class="material-symbols-outlined" style="font-size: 32px"
+                    >partly_cloudy_day</span
+                  >
+                </div>
+                <div class="mt-4">
+                  <span class="temp">68°</span>
+                </div>
+                <div class="d-flex gap-3 mt-2" style="font-size: 13px; opacity: 0.9">
+                  <span class="d-flex align-items-center gap-1">
+                    <span class="material-symbols-outlined" style="font-size: 16px"
+                      >water_drop</span
+                    >
+                    45%
+                  </span>
+                  <span class="d-flex align-items-center gap-1">
+                    <span class="material-symbols-outlined" style="font-size: 16px">air</span> 12
+                    mph
+                  </span>
+                </div>
+              </div>
+
+              <!-- Forecast -->
+              <div class="weather-forecast">
+                <div class="forecast-day">
+                  <span class="day-label">Mon</span>
+                  <span class="material-symbols-outlined text-primary-brand" style="font-size: 20px"
+                    >sunny</span
+                  >
+                  <span class="day-temp">72°</span>
+                </div>
+                <div class="forecast-day forecast-day-muted">
+                  <span class="day-label">Tue</span>
+                  <span class="material-symbols-outlined" style="font-size: 20px; color: #727787"
+                    >cloud</span
+                  >
+                  <span class="day-temp">65°</span>
+                </div>
+                <div class="forecast-day forecast-day-muted">
+                  <span class="day-label">Wed</span>
+                  <span class="material-symbols-outlined" style="font-size: 20px; color: #727787"
+                    >rainy</span
+                  >
+                  <span class="day-temp">60°</span>
+                </div>
+                <div class="forecast-day forecast-day-muted">
+                  <span class="day-label">Thu</span>
+                  <span class="material-symbols-outlined" style="font-size: 20px; color: #727787"
+                    >partly_cloudy_day</span
+                  >
+                  <span class="day-temp">68°</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity Heatmap -->
+            <div class="card-custom p-3">
+              <h3 class="section-title mb-3">Activity Heatmap</h3>
+              <div class="heatmap-grid">
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.2)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.4)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.8)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.1)"></div>
+                <div class="heatmap-cell" style="background: #0057cd"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.3)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.6)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.5)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.2)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.9)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.1)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.4)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.7)"></div>
+                <div class="heatmap-cell" style="background: rgba(0, 87, 205, 0.3)"></div>
+              </div>
+              <div
+                class="d-flex justify-content-between align-items-center mt-2"
+                style="font-size: 13px; color: #727787"
+              >
+                <span>Less</span>
+                <div class="d-flex gap-1">
+                  <div
+                    style="
+                      width: 12px;
+                      height: 12px;
+                      border-radius: 2px;
+                      background: rgba(0, 87, 205, 0.1);
+                    "
+                  ></div>
+                  <div
+                    style="
+                      width: 12px;
+                      height: 12px;
+                      border-radius: 2px;
+                      background: rgba(0, 87, 205, 0.5);
+                    "
+                  ></div>
+                  <div
+                    style="width: 12px; height: 12px; border-radius: 2px; background: #0057cd"
+                  ></div>
+                </div>
+                <span>More</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /row -->
+      </div>
+      <!-- /container -->
+    </div>
+    <!-- /main-content -->
+
+    <!-- Toast -->
+    <div id="toast">
+      <span class="material-symbols-outlined" style="color: #0057cd">check_circle</span>
+      <span style="font-size: 16px">Task added successfully!</span>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Tema escuro (compartilhado) -->
+    <script src="public/js/theme.js"></script>
+    <!-- Sidebar mobile (compartilhado) -->
+    <script src="public/js/sidebar.js"></script>
+    <!-- Custom JS -->
+    <script src="public/js/script.js"></script>
+  </body>
+</html>

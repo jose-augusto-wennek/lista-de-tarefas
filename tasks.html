@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Tasks | FocusFlow</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS compartilhado + CSS específico de Tasks -->
+    <link href="public/css/style.css" rel="stylesheet" />
+    <link href="public/css/tasks.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Overlay mobile para fechar sidebar ao clicar fora -->
+    <div id="sidebar-overlay"></div>
+
+    <!-- ═══════════════════════════ SIDEBAR ═══════════════════════════ -->
+    <aside id="sidebar">
+      <div class="sidebar-brand mb-3">
+        <h1>FocusFlow Pro</h1>
+        <p>Productivity System</p>
+      </div>
+
+      <button class="btn-new-task mb-3 w-100 justify-content-center" data-open-modal>
+        <span class="material-symbols-outlined" style="font-size: 18px">add</span>
+        New Task
+      </button>
+
+      <nav class="d-flex flex-column gap-1">
+        <a class="nav-link-custom" href="index.html">
+          <span class="material-symbols-outlined">dashboard</span> Dashboard
+        </a>
+        <a class="nav-link-custom active" href="tasks.html">
+          <span class="material-symbols-outlined">checklist</span> Tasks
+        </a>
+        <a class="nav-link-custom" href="calendar.html">
+          <span class="material-symbols-outlined">calendar_today</span> Calendar
+        </a>
+        <a class="nav-link-custom" href="#">
+          <span class="material-symbols-outlined">analytics</span> Analytics
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a class="nav-link-custom" href="#">
+          <span class="material-symbols-outlined">settings</span> Settings
+        </a>
+        <a class="nav-link-custom" href="#">
+          <span class="material-symbols-outlined">logout</span> Logout
+        </a>
+      </div>
+    </aside>
+
+    <!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
+    <div id="main-content">
+      <!-- TOP BAR -->
+      <header id="topbar">
+        <div class="d-flex align-items-center gap-2 d-md-none">
+          <button class="btn-icon" id="mobileMenuBtn">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <span class="fw-bold fs-5 text-primary-brand">FocusFlow</span>
+        </div>
+
+        <div class="search-bar d-none d-md-flex">
+          <span class="material-symbols-outlined text-muted" style="font-size: 20px">search</span>
+          <input placeholder="Search tasks, projects..." type="text" />
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn-icon" id="themeToggle" title="Toggle dark mode">
+            <span class="material-symbols-outlined">dark_mode</span>
+          </button>
+          <img
+            alt="User profile"
+            class="avatar"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH9x4lUEm0cm-6tvwYkyAHtJmg9f2evUovOFibBc7fZFHMOMh1SwaiqTkELlc0NqKtMPK_ok8tc7yA0FVXc4Auz4FmmhxOLaC_m4AwcdfbQJlNGXl84NxAT5MgScSSXJ3PLUvHpwXLaBOWNTgH14u_EubinwzBHhqV8dAOctik0Gcd4CSX0KRyfIgvMW2hCBOoPKS7_n13UQuNvoH4aanU3mmvRu-dEa30XEBRbxxmkq6VFbdzSTR9SWL_s9gMHBrmcjtvXrmz9v77"
+          />
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <div class="container-fluid p-3 p-md-4 flex-grow-1" style="max-width: 1280px; margin: 0 auto">
+        <!-- Page Header -->
+        <div
+          class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4"
+        >
+          <div>
+            <h1 class="page-title mb-1">My Tasks</h1>
+            <p class="page-subtitle mb-0">Organize, priorize e acompanhe suas atividades</p>
+          </div>
+          <button class="btn-primary-brand" data-open-modal>
+            <span class="material-symbols-outlined" style="font-size: 18px">add</span>
+            Nova Tarefa
+          </button>
+        </div>
+
+        <!-- Mini Stats -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="mini-stat">
+              <div class="mini-stat-icon blue">
+                <span class="material-symbols-outlined" style="font-size: 20px">checklist</span>
+              </div>
+              <div>
+                <div class="mini-stat-value" id="stat-total">0</div>
+                <div class="mini-stat-label">Total</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="mini-stat">
+              <div class="mini-stat-icon green">
+                <span class="material-symbols-outlined" style="font-size: 20px">check_circle</span>
+              </div>
+              <div>
+                <div class="mini-stat-value" id="stat-completed">0</div>
+                <div class="mini-stat-label">Concluídas</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="mini-stat">
+              <div class="mini-stat-icon orange">
+                <span class="material-symbols-outlined" style="font-size: 20px">pending</span>
+              </div>
+              <div>
+                <div class="mini-stat-value" id="stat-pending">0</div>
+                <div class="mini-stat-label">Pendentes</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="mini-stat">
+              <div class="mini-stat-icon red">
+                <span class="material-symbols-outlined" style="font-size: 20px">priority_high</span>
+              </div>
+              <div>
+                <div class="mini-stat-value" id="stat-high">0</div>
+                <div class="mini-stat-label">Alta Prior.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Layout: Task List + History Panel -->
+        <div class="row g-4">
+          <!-- ── Task List Column ── -->
+          <div class="col-12 col-xl-8">
+            <div class="card-custom">
+              <!-- Toolbar -->
+              <div class="p-3 border-bottom" style="border-color: #c2c6d8">
+                <!-- Filters -->
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                  <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="pending">Pendentes</button>
+                    <button class="filter-btn" data-filter="completed">Concluídas</button>
+                    <button class="filter-btn" data-filter="today">Hoje</button>
+                    <button class="filter-btn" data-filter="high">Alta</button>
+                  </div>
+                </div>
+
+                <!-- Search + Sort + Actions -->
+                <div class="tasks-toolbar">
+                  <div class="search-bar-tasks">
+                    <span class="material-symbols-outlined text-muted" style="font-size: 18px"
+                      >search</span
+                    >
+                    <input id="search-input" placeholder="Buscar tarefas..." type="text" />
+                  </div>
+
+                  <select class="select-custom" id="sort-select">
+                    <option value="date">Ordenar: Data</option>
+                    <option value="priority">Ordenar: Prioridade</option>
+                    <option value="title">Ordenar: Título</option>
+                  </select>
+
+                  <button class="btn-outline-custom ms-auto" id="btn-clear-completed">
+                    <span class="material-symbols-outlined" style="font-size: 16px"
+                      >delete_sweep</span
+                    >
+                    Limpar concluídas
+                  </button>
+                </div>
+              </div>
+
+              <!-- Task List -->
+              <div id="task-list"></div>
+
+              <!-- Empty State -->
+              <div class="empty-state" id="empty-state">
+                <span class="material-symbols-outlined">task_alt</span>
+                <p>Nenhuma tarefa encontrada.</p>
+                <button class="btn-primary-brand mt-2" data-open-modal>
+                  <span class="material-symbols-outlined" style="font-size: 16px">add</span>
+                  Criar tarefa
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── History Panel Column ── -->
+          <div class="col-12 col-xl-4">
+            <div class="history-panel">
+              <div class="section-header">
+                <h2 class="section-title mb-0" style="font-size: 16px">
+                  <span
+                    class="material-symbols-outlined me-1"
+                    style="font-size: 18px; vertical-align: middle"
+                    >history</span
+                  >
+                  Histórico
+                </h2>
+                <button
+                  class="btn-outline-custom py-1 px-2"
+                  id="btn-clear-history"
+                  style="font-size: 12px"
+                >
+                  Limpar
+                </button>
+              </div>
+              <div id="history-list">
+                <div class="history-empty">Nenhuma ação registrada ainda.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /row -->
+      </div>
+      <!-- /container -->
+    </div>
+    <!-- /main-content -->
+
+    <!-- ═══════════════════════════ MODAL ═══════════════════════════ -->
+    <div class="modal fade modal-custom" id="taskModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center justify-content-between">
+            <h5 class="modal-title" id="modal-title">Nova Tarefa</h5>
+            <button class="btn-close-custom" data-bs-dismiss="modal">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+
+          <div class="modal-body p-4 d-flex flex-column gap-3">
+            <!-- Título -->
+            <div>
+              <label class="form-label-custom" for="field-title">Título *</label>
+              <input
+                class="form-control-custom"
+                id="field-title"
+                type="text"
+                placeholder="Ex: Revisar relatório mensal"
+                maxlength="120"
+              />
+            </div>
+
+            <!-- Descrição -->
+            <div>
+              <label class="form-label-custom" for="field-desc">Descrição</label>
+              <textarea
+                class="form-control-custom"
+                id="field-desc"
+                rows="3"
+                placeholder="Detalhes opcionais sobre a tarefa..."
+                style="resize: vertical"
+              ></textarea>
+            </div>
+
+            <!-- Prioridade -->
+            <div>
+              <label class="form-label-custom">Prioridade</label>
+              <div class="priority-selector">
+                <button class="priority-option" data-priority="high">🔴 Alta</button>
+                <button class="priority-option selected" data-priority="medium">🟠 Média</button>
+                <button class="priority-option" data-priority="low">🟢 Baixa</button>
+              </div>
+            </div>
+
+            <!-- Data e Hora -->
+            <div class="row g-3">
+              <div class="col-7">
+                <label class="form-label-custom" for="field-date">Data</label>
+                <input class="form-control-custom" id="field-date" type="date" />
+              </div>
+              <div class="col-5">
+                <label class="form-label-custom" for="field-time">Horário</label>
+                <input class="form-control-custom" id="field-time" type="time" />
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer d-flex gap-2 justify-content-end">
+            <button class="btn-cancel" data-bs-dismiss="modal">Cancelar</button>
+            <button class="btn-save" id="btn-save-task">Salvar Tarefa</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="tasks-toast">
+      <span class="material-symbols-outlined toast-icon" style="color: #0057cd">check_circle</span>
+      <span class="toast-text">Tarefa adicionada!</span>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Tema escuro (compartilhado) -->
+    <script src="public/js/theme.js"></script>
+    <!-- Sidebar mobile (compartilhado) -->
+    <script src="public/js/sidebar.js"></script>
+    <!-- Tasks JS -->
+    <script src="public/js/tasks.js"></script>
+  </body>
+</html>
